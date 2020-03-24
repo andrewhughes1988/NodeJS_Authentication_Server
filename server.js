@@ -25,8 +25,8 @@ mongoose.connect(mongoURI, {
     useCreateIndex: true, 
     useNewUrlParser: true, 
     useUnifiedTopology: true })
-    .then(() => { console.log('MongoDB connected successfully')})
-    .catch((error) => console.log(error));
+        .then(()               => console.log('MongoDB connected successfully'))
+        .catch((error)         => console.log(error));
 
 console.log(`Listening on ${port}`);
 app.listen(port);
