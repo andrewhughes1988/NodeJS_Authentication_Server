@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const register = require('./register');
+const token = require('./token');
 const login = require('./login');
 const mongoose = require('mongoose');
 const User = require('./models/User.model');
@@ -24,9 +25,12 @@ app.get('/users', (req, res) => {
 mongoose.connect(mongoURI, { 
     useCreateIndex: true, 
     useNewUrlParser: true, 
-    useUnifiedTopology: true })
-        .then(()               => console.log('MongoDB connected successfully'))
-        .catch((error)         => console.log(error));
+    useUnifiedTopology: true 
+})
+.then(() => console.log('MongoDB connected successfully'))
+.catch((error) => console.log(error));
+
+
 
 console.log(`Listening on ${port}`);
 app.listen(port);

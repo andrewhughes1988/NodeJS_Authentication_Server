@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 let UserSchema = new Schema({
 
@@ -37,6 +38,23 @@ UserSchema.statics.hash_password = async function(password) {
         return bcrypt.hash(password, 10) 
     }
     else { return false; }
+    
+}
+
+UserSchema.methods.generate_token = function(type) {
+    const issued_at = Date.now();
+    const user = { id: this._id, name: this.name, email: this.email, iat: issued_at };
+    let secret;
+    
+    
+    if(type == 'access') {
+        secret = process.env.ACCESS_TOKEN_SECRET;
+        return jwt.sign(user, secret, {expiresIn: '24h'});
+    } else {
+        secret = process.env.REFRESH_TOKEN_SECRET;
+        return jwt.sign(user, secret);
+    }
+    
     
 }
 
