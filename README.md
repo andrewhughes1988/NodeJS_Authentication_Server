@@ -8,7 +8,7 @@ on a completely different server.
 <br> <br>
 The client should submit the *user's credentials* to obtain a new access token and refresh token **OR** 
 submit a *refresh token* to the authentication server to obtain a new access token. The client should verify 
-the user with the access token client side. Access tokens expire in 24 hours by default.
+the user with the access token client side. Access tokens expire in 24 hours by default. Refresh tokens expire in 5 days by default.
 
 
 ## Setup:
@@ -53,6 +53,12 @@ On successful authentication tokens are generated and the server will respond wi
 On successful authentication and access token is generated and the server will respond with:
 
 `{success: true, message: 'Access token refreshed', access_token: *TOKEN*}`
+<br><br>
+
+*Delete refresh token:* DELETE request to SERVER_URL/logout with `token`
+On successful deletion the server will respond with:
+
+`{success: true, message: 'Token removed'}`
 
 
 
