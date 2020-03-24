@@ -1,27 +1,23 @@
+/* LOAD MODULES */
 require('dotenv').config();
 const express = require('express');
 const register = require('./register');
 const token = require('./token');
 const login = require('./login');
 const mongoose = require('mongoose');
-const User = require('./models/User.model');
 
-
+/* CONFIGURE */
 const mongoURI = process.env.MONGO_DB_URI;
 const app = express();
-const port = process.env.PORT || 3000;
-
+const port = process.env.PORT || 23456;
 app.use(express.json());
+
+/* ROUTES */
 app.use('/register', register);
 app.use('/login', login);
+app.use('/token', token);
 
-app.get('/users', (req, res) => {
-    User.find((error, result) => {
-        res.json(result);
-    });
-});
-
-
+/* CONNECT DATABASE */
 mongoose.connect(mongoURI, { 
     useCreateIndex: true, 
     useNewUrlParser: true, 
@@ -30,7 +26,6 @@ mongoose.connect(mongoURI, {
 .then(() => console.log('MongoDB connected successfully'))
 .catch((error) => console.log(error));
 
-
-
+/* START SERVER */
 console.log(`Listening on ${port}`);
 app.listen(port);
