@@ -8,7 +8,13 @@ let TokenSchema = new Schema({
         type: String,
         required: true,
         unique: true    
-    }
+    },
+
+    expireAt: {
+        type: Date,
+        default: Date.now,
+        index: { expires: '5d' }
+    },
 
 }, { timestamps: true });
 
@@ -21,7 +27,7 @@ TokenSchema.statics.generate_token = function(user, type) {
     if(type == 'access') {
         return jwt.sign(user_token, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '24h'});
     } else {
-        return jwt.sign(user_token, process.env.REFRESH_TOKEN_SECRET);
+        return jwt.sign(user_token, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '5d'});
     }    
 }
 

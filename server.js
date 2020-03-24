@@ -4,6 +4,7 @@ const express = require('express');
 const register = require('./register');
 const token = require('./token');
 const login = require('./login');
+const logout = require('./logout');
 const mongoose = require('mongoose');
 
 /* CONFIGURE */
@@ -15,6 +16,7 @@ app.use(express.json());
 /* ROUTES */
 app.use('/register', register);
 app.use('/login', login);
+app.use('/logout', logout);
 app.use('/token', token);
 
 /* CONNECT DATABASE */
