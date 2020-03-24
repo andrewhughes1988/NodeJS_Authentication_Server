@@ -15,7 +15,8 @@ router.post('/', (req, res) => {
 
         if(!(user)) { 
             /* BAD EMAIL */
-            response.message = 'Email Not Registered';   
+            response.message = 'Email Not Registered';
+            return res.status(401).json(response);
         } else {
         
             authenticated = await user.authenticate(password)
@@ -27,15 +28,15 @@ router.post('/', (req, res) => {
                 response.access_token = Token.generate_token(user, 'access');
                 response.refresh_token = Token.generate_token(user, 'refresh');
                 new Token({ token: response.refresh_token }).save();
+                return res.json(response);
                 
             } else { 
                 /* BAD PASSWORD */
                 response.message = 'Password Incorrect'; 
+                return res.status(401).json(response);
             }
 
         }
-
-        res.json(response);
 
     }).select('_id name email +password') // Ensure password hash is returned    
 
